@@ -5,7 +5,7 @@ function Footer() {
                 <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
                     © 2024{" "}
                     <a href="https://github.com/sarveshmore2004/BNY-hackathon" className="hover:underline">
-                        AuditEase
+                        WebCraft
                     </a>
                     . All Rights Reserved.
                 </span>
