@@ -41,7 +41,7 @@ export default function Header() {
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <DisclosureButton
-                  className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-primary_text focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                   onClick={toggleMobileMenu}
                 >
                   <span className="absolute -inset-0.5" />
@@ -55,7 +55,7 @@ export default function Header() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <div className=" text-purple-400 text-3xl">WebCraft</div>
+                  <div className=" text-primary_text text-3xl">WebCraft</div>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -65,8 +65,8 @@ export default function Header() {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            ? "bg-gray-900 text-primary_text"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-primary_text",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -82,38 +82,38 @@ export default function Header() {
                   <Dropdown
                     arrowIcon={false}
                     inline
-                    className="bg-black"
+                    className="bg-background"
                     label={
                       <img
                         src={currentUser.profilePicture}
                         alt=""
                         referrerPolicy="no-referrer"
-                        className="h-10 rounded-full bg-black"
+                        className="h-10 rounded-full bg-background"
                       />
                     }
                   >
                     <Dropdown.Header >
-                      <span className="block text-sm text-white ">
+                      <span className="block text-sm text-primary_text ">
                         {currentUser.username}
                       </span>
-                      <span className="block text-sm font-medium truncat text-white">
+                      <span className="block text-sm font-medium truncat text-primary_text">
                         {currentUser.email}
                       </span>
                     </Dropdown.Header>
                     <Link to={"/profile"}>
-                      <Dropdown.Item className=" hover:bg-gray-50  hover:text-gray-600 text-white">
+                      <Dropdown.Item className=" hover:bg-gray-50  hover:text-gray-600 text-primary_text">
                         Profile
                       </Dropdown.Item>
                     </Link>
                     <Dropdown.Divider />
                     
-                    <Dropdown.Item className=" hover:bg-gray-50  hover:text-gray-600 text-white" onClick={handleSignout}>Sign out</Dropdown.Item>
-                          </Dropdown>
+                    <Dropdown.Item className=" hover:bg-gray-50  hover:text-gray-600 text-primary_text" onClick={handleSignout}>Sign out</Dropdown.Item>
+                  </Dropdown>
                 ) : (
                   <Link to="/sign-in">
                     <button
                       type="submit"
-                      className="bg-transparent hover:bg-blue-500 text-blue-400 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full"
+                      className="bg-transparent hover:bg-hover_accent text-accent font-semibold hover:text-primary_text py-2 px-4 border border-hover_accent hover:border-transparent rounded w-full"
                     >
                       Sign In
                     </button>
@@ -131,8 +131,8 @@ export default function Header() {
                   to={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      ? "bg-gray-900 text-primary_text"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-primary_text",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}

@@ -20,13 +20,15 @@ export default {
     },
     extend: {
       colors: {
-        primary: "#171717",
-        secondary: "#212121",
-        tertiary: "#2F2F2F",
-        border: "#526D82",
-        background: "#0D0D0D",
-        primary_text: "#B4B4B4",
-        secondary_text: "#FFFFFF",
+        primary: "#171717",        // Dark gray
+        secondary: "#212121",      // Slightly lighter gray
+        tertiary: "#2F2F2F",       // Neutral gray
+        border: "#4A5568",         // Neutral dark gray
+        background: "#0D0D0D",     // Deep black
+        primary_text: "#FFFFFF",   // Bright white
+        secondary_text: "#B4B4B4", // Light gray
+        accent: "#10A37F",         // Main teal-green accent
+        hover_accent: "#1ABC9C",   // Brighter teal for hover effects
       },
       animation: {
         vote: "vote 1s ease-in-out",

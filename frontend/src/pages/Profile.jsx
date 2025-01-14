@@ -17,7 +17,7 @@ export default function Profile() {
     const { handleDeleteUser } = useDeleteUser();
   
     return (
-      <div className="flex flex-col min-h-screen bg-gray-800">
+      <div className="flex flex-col min-h-screen bg-secondary">
         <Header />
         <div className="max-w-lg mx-auto p-3 w-full flex-1 flex flex-col justify-center">
           <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>
@@ -25,7 +25,7 @@ export default function Profile() {
               <img
                 src={currentUser.profilePicture}
                 alt="user"
-                className="rounded-full w-full h-full object-cover border-8 border-[lightgray]"
+                className="rounded-full w-full h-full object-cover border-8 border-border"
               />
             </div>
             <TextInput
@@ -53,7 +53,7 @@ export default function Profile() {
             />
             <button
               type="submit"
-              className="bg-transparent hover:bg-blue-500 text-blue-400 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full"
+              className="bg-transparent hover:bg-hover_accent text-accent font-semibold hover:text-primary_text py-2 px-4 border border-hover_accent hover:border-transparent rounded w-full"
             >
               {loading ? (
                 <div className="flex justify-center">
@@ -67,7 +67,7 @@ export default function Profile() {
             {currentUser.isAdmin && (
                 <Link to={'/create-post'}>
                     <button
-                    className="bg-transparent hover:bg-blue-500 text-blue-400 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full"
+                    className="bg-transparent hover:bg-hover_accent text-accent font-semibold hover:text-primary_text py-2 px-4 border border-hover_accent hover:border-transparent rounded w-full"
                     >
                     Create a post
                     </button>
@@ -91,12 +91,12 @@ export default function Profile() {
             <Modal.Header />
             <Modal.Body>
               <div className='text-center'>
-                <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
-                <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+                <HiOutlineExclamationCircle className='h-14 w-14 text-secondary_text mb-4 mx-auto' />
+                <h3 className='mb-5 text-lg text-secondary_text'>
                   Are you sure you want to delete your account?
                 </h3>
                 <div className='flex justify-center gap-4'>
-                  <Button className=" text-red-400" onClick={handleDeleteUser}>
+                  <Button className=" text-red-400" onClick={()=>handleDeleteUser(currentUser._id)}>
                     Yes, I am sure
                   </Button>
                   <Button className=" text-green-400" onClick={() => setShowModal(false)}>
