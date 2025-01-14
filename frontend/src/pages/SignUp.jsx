@@ -30,7 +30,7 @@ const SignUp = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="bg-gray-800 flex flex-col lg:flex-row flex-1">
+      <div className="bg-secondary flex flex-col lg:flex-row flex-1">
         {/* Left Section */}
         <div className="flex-1 p-6 lg:p-12 flex items-center justify-center lg:justify-start">
           <div className="text-center lg:text-left lg:pl-[25%]">

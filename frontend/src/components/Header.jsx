@@ -34,7 +34,7 @@ export default function Header() {
     current: item.href === location.pathname,
   }));
   return (
-    <Disclosure as="nav" className="bg-gray-700 top-0">
+    <Disclosure as="nav" className="bg-primary top-0">
       {({ open }) => (
         <>
           <div className="mx-auto sm:px-10 py-1">
