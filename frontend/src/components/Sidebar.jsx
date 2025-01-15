@@ -1,30 +1,34 @@
 import React from 'react';
-import { ChatBubbleLeftIcon, PlusCircleIcon } from '@heroicons/react/24/solid';
 
-const Sidebar = ({ chats, onStartNewChat, onSelectChat }) => {
+const Sidebar = ({ chats, onSelectChat, onStartNewChat }) => {
   return (
-    <div className="w-64 h-screen bg-primary text-primary_text flex flex-col justify-between">
-      <div>
-        <button
-          onClick={onStartNewChat}
-          className="flex items-center bg-accent text-white w-full py-2 px-4 rounded-md mb-4 hover:bg-hover_accent"
-        >
-          <PlusCircleIcon className="w-6 h-6 mr-2" />
-          Start New Chat
-        </button>
-        <ul className="space-y-2 px-4">
-          {chats.map((chat) => (
-            <li
-              key={chat.id}
-              className="flex items-center p-2 rounded-md bg-tertiary hover:bg-accent cursor-pointer"
-              onClick={() => onSelectChat(chat.id)}
-            >
-              <ChatBubbleLeftIcon className="w-5 h-5 mr-2" />
-              {chat.title}
-            </li>
-          ))}
-        </ul>
+    <div className="relative group">
+      {/* Sidebar */}
+      <div
+        className="absolute top-0 left-0 h-full bg-primary text-primary_text transition-all duration-300 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 z-10 w-64"
+      >
+        <div className="p-4">
+          <button
+            onClick={onStartNewChat}
+            className="w-full bg-accent hover:bg-hover_accent p-2 rounded-md mb-4"
+          >
+            New Chat
+          </button>
+          <ul>
+            {chats.map((chat, index) => (
+              <li
+                key={index}
+                onClick={() => onSelectChat(chat)}
+                className="p-2 hover:bg-secondary cursor-pointer"
+              >
+                {chat.name}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
+      {/* Invisible hover area */}
+      <div className="absolute top-0 left-0 h-full w-4 group-hover:w-64 z-0" />
     </div>
   );
 };
