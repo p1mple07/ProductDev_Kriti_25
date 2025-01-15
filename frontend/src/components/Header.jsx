@@ -34,7 +34,7 @@ export default function Header() {
     current: item.href === location.pathname,
   }));
   return (
-    <Disclosure as="nav" className="bg-primary top-0">
+    <Disclosure as="nav" className="bg-tertiary top-0">
       {({ open }) => (
         <>
           <div className="mx-auto sm:px-10 py-1">
@@ -55,7 +55,7 @@ export default function Header() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <div className=" text-primary_text text-3xl">WebCraft</div>
+                  <h1 className="text-3xl font-bold p-4 text-accent">WebCraft</h1>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">

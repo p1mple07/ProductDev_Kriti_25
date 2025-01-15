@@ -5,6 +5,8 @@ import SignIn from "./pages/SignIn";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
+import Chat from "./pages/chat";
+import NewChat from "./pages/NewChat";
 
 function App() {
 
@@ -16,7 +18,9 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Profile />} />
+          <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/" element={<NewChat />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}></Route>
         <Route path="*" element={<SignIn />} />
