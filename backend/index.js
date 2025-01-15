@@ -1,17 +1,18 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import cors from 'cors'; 
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
-import cookieParser from 'cookie-parser';
+import chatRoutes from './routes/chat.route.js';
 
 dotenv.config();
 
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
-    console.log('MongoDb is connected');
+    console.log('MongoDB is connected');
   })
   .catch((err) => {
     console.log(err);
@@ -26,13 +27,12 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000!');
-});
-
+// API Routes
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/chat', chatRoutes);
 
+// Global Error Handler
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
@@ -41,4 +41,9 @@ app.use((err, req, res, next) => {
     statusCode,
     message,
   });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}!`);
 });

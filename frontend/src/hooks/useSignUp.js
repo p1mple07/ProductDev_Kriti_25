@@ -22,7 +22,7 @@ const useSignUp = () => {
         toast.error(data.message)
         dispatch(signUpFailure(data.message));
       } else {
-        navigate('/sign-in');
+        navigate('/');
         dispatch(signUpSuccess());
       }
     } catch (error) {
