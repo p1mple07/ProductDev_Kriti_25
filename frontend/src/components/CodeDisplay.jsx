@@ -8,7 +8,7 @@ const CodeDisplay = ({ codeSnippet, isExpanded }) => {
           ? isExpanded
             ? "w-full opacity-100"
             : "w-3/5 opacity-100"
-          : "w-0 opacity-0"
+          : "w-0 opacity-100"
       }`}
     >
       {codeSnippet && (

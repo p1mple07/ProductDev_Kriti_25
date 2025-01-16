@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import ChatInterface from "../components/ChatInterface";
 import CodeDisplay from "../components/CodeDisplay";
 import Header from "../components/Header";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 const NewChat = () => {
   const [chats, setChats] = useState([
@@ -20,8 +21,7 @@ const NewChat = () => {
     // Simulating backend response with a dummy code snippet
     const dummyCode = {
       language: "javascript",
-      content: `
-        // Example JavaScript Code
+      content: `// Example JavaScript Code
         function greet(name) {
           return \`Hello, \${name}!\`;
         }
@@ -37,9 +37,11 @@ const NewChat = () => {
   };
 
   return (
-    <div className="flex flex-col">
-    <Header />
-      <div className="relative flex h-screen bg-background text-primary_text">
+    <div className="flex flex-col h-screen">
+      {/* Fixed Header */}
+      <Header />
+
+      <div className="flex flex-1 bg-background text-primary_text">
         {/* Sidebar */}
         <Sidebar
           chats={chats}
@@ -49,19 +51,14 @@ const NewChat = () => {
 
         {/* Chat Interface */}
         <div
-          className={`flex flex-col transition-all duration-500 ${
-            codeSnippet
-              ? isCodeExpanded
-                ? "w-0"
-                : "w-2/5"
-              : "w-full"
+          className={`flex flex-col flex-1 transition-all duration-500 ${
+            codeSnippet ? (isCodeExpanded ? "w-0" : "w-2/5") : "w-full"
           }`}
         >
-          
           <ChatInterface onSendMessage={onSendMessage} messages={messages} />
         </div>
 
-        {/* Toggle Button */}
+        {/* Toggle Button for Code Panel */}
         {codeSnippet && (
           <button
             onClick={toggleCodeExpand}
@@ -69,15 +66,16 @@ const NewChat = () => {
               isCodeExpanded ? "left-4" : "left-[40%]"
             }`}
           >
-            {isCodeExpanded ? "<" : ">"}
+            {isCodeExpanded ? (
+              <ChevronRightIcon className="w-3 h-6" />
+            ) : (
+              <ChevronLeftIcon className="w-3 h-6" />
+            )}
           </button>
         )}
 
         {/* Code Display */}
-        <CodeDisplay
-          codeSnippet={codeSnippet}
-          isExpanded={isCodeExpanded}
-        />
+        <CodeDisplay codeSnippet={codeSnippet} isExpanded={isCodeExpanded} />
       </div>
     </div>
   );
