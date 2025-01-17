@@ -3,12 +3,12 @@ import React from "react";
 const CodeDisplay = ({ codeSnippet, isExpanded }) => {
   return (
     <div
-      className={`transition-all duration-500 bg-secondary p-4 overflow-auto ${
+      className={`transition-all duration-500 bg-secondary overflow-auto ${
         codeSnippet
           ? isExpanded
-            ? "w-full opacity-100"
-            : "w-3/5 opacity-100"
-          : "w-0 opacity-100"
+            ? "p-4 w-full opacity-100"
+            : "p-4 w-3/5 opacity-100"
+          : ""
       }`}
     >
       {codeSnippet && (

@@ -4,7 +4,8 @@ import {
   getChatById, 
   createChat, 
   updateChat, 
-  deleteChat 
+  deleteChat, 
+  deleteAllChats
 } from '../controllers/chat.controller.js';
 import { verifyToken } from '../utils/verifyUser.js';
 
@@ -15,5 +16,6 @@ router.get('/:id', verifyToken, getChatById);
 router.post('/', verifyToken, createChat);
 router.put('/:id', verifyToken, updateChat);
 router.delete('/:id', verifyToken, deleteChat);
+router.delete('/', verifyToken, deleteAllChats);
 
 export default router;

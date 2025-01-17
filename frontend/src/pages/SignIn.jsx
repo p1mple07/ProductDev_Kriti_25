@@ -26,7 +26,7 @@ const SignIn = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="bg-secondary flex flex-col lg:flex-row flex-1">
+      <div className="flex flex-col lg:flex-row flex-1 bg-gradient-to-b from-[#0A0F14] to-black">
         {/* Left Section */}
         <div className="flex-1 p-6 lg:p-12 flex items-center justify-center lg:justify-start">
           <div className="text-center lg:text-left lg:pl-[25%]">

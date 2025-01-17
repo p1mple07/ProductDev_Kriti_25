@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Disclosure, DisclosureButton } from "@headlessui/react";
+import { Link } from "react-router-dom";
+import { Disclosure } from "@headlessui/react";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
 import useSignOut from "../hooks/useSignOut";
@@ -8,7 +8,6 @@ import ProfileCard from "./ProfileCard";
 
 function Header() {
   const [isProfileCardVisible, setIsProfileCardVisible] = useState(false);
-  const location = useLocation();
   const { handleSignout } = useSignOut();
   const { currentUser } = useSelector((state) => state.user);
 
@@ -17,7 +16,7 @@ function Header() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-tertiary">
+    <Disclosure as="nav" className="bg-secondary">
       {({ open }) => (
         <>
           <div className="container mx-auto px-2 py-1">

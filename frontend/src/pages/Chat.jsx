@@ -43,11 +43,7 @@ const Chat = () => {
 
       <div className="flex flex-1 bg-background text-primary_text">
         {/* Sidebar */}
-        <Sidebar
-          chats={chats}
-          onSelectChat={(chat) => console.log(chat)}
-          onStartNewChat={() => console.log("New Chat Started")}
-        />
+        <Sidebar />
 
         {/* Chat Interface */}
         <div
@@ -60,20 +56,19 @@ const Chat = () => {
 
         {/* Toggle Button for Code Panel */}
         {codeSnippet && (
-          <button
+          <div
             onClick={toggleCodeExpand}
-            className={`absolute top-1/2 -translate-y-1/2 bg-accent text-primary_text p-2 rounded-md hover:bg-hover_accent transition-all duration-500 ${
+            className={`absolute top-1/2 -translate-y-1/2 cursor-pointer transition-all duration-500 ${
               isCodeExpanded ? "left-4" : "left-[40%]"
             }`}
           >
             {isCodeExpanded ? (
-              <ChevronRightIcon className="w-3 h-6" />
+              <ChevronRightIcon className="w-6 h-6 text-primary_text hover:text-hover_accent" />
             ) : (
-              <ChevronLeftIcon className="w-3 h-6" />
+              <ChevronLeftIcon className="w-6 h-6 text-primary_text hover:text-hover_accent" />
             )}
-          </button>
+          </div>
         )}
-
 
         {/* Code Display */}
         <CodeDisplay codeSnippet={codeSnippet} isExpanded={isCodeExpanded} />

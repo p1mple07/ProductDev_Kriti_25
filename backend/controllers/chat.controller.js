@@ -81,3 +81,13 @@ export const deleteChat = async (req, res, next) => {
     next(errorHandler(500, 'Failed to delete chat.'));
   }
 };
+
+// Delete all chats by the user
+export const deleteAllChats = async (req, res, next) => {
+  try {
+    await Chat.deleteMany({ user: req.user.id });
+    res.status(200).json({ message: 'All user chats deleted successfully.' });
+  } catch (error) {
+    next(errorHandler(500, 'Failed to delete user chats.'));
+  }
+};

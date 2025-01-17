@@ -12,7 +12,7 @@ const ChatInterface = ({ onSendMessage, messages }) => {
   };
 
   return (
-    <div className="flex flex-col flex-1 bg-secondary text-primary_text">
+    <div className="flex flex-col flex-1 bg-gradient-to-b from-[#0A0F14] to-black text-primary_text">
       {/* Chat Messages (Scrollable) */}
       <div className="flex-1 p-4 overflow-y-auto">
         {messages?.map((msg, index) => (

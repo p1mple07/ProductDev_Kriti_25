@@ -1,6 +1,6 @@
 function Footer() {
     return (
-        <footer className="bg-primary h-[8vh]">
+        <footer className="bg-primary h-[6vh]">
             <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
                 <span className="text-sm text-secondary_text sm:text-center">
                     © 2024{" "}
