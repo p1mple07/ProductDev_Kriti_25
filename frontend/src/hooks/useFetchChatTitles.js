@@ -1,34 +1,25 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { fetchChatsStart, fetchChatsSuccess, fetchChatsFailure } from "../redux/chat/chatSlice";
 
 const useFetchChatTitles = () => {
-  const dispatch = useDispatch();
   const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchChatTitles = async () => {
-      try {
-        dispatch(fetchChatsStart());
-        const res = await fetch("/api/chat/", {
-          credentials: "include",
-        });
+    setLoading(true);
+    setError(null);
+
+    fetch("/api/chat", { credentials: "include" })
+      .then(async (res) => {
         const data = await res.json();
-        if (!res.ok) {
-          dispatch(fetchChatsFailure(data.message));
-        } else {
-          dispatch(fetchChatsSuccess(data));
-          setChats(data);
-        }
-      } catch (error) {
-        dispatch(fetchChatsFailure(error.message));
-      }
-    };
+        if (!res.ok) throw new Error(data.message);
+        setChats(data);
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
 
-    fetchChatTitles();
-  }, [dispatch]);
-
-  return { chats };
+  return { chats, loading, error };
 };
 
 export default useFetchChatTitles;

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import useSignOut from "../hooks/useSignOut";
 import ProfileCard from "./ProfileCard";
 
-function Header() {
+function Header({ chatTitle }) {
   const [isProfileCardVisible, setIsProfileCardVisible] = useState(false);
   const { handleSignout } = useSignOut();
   const { currentUser } = useSelector((state) => state.user);
@@ -27,6 +27,15 @@ function Header() {
                   <h2 className="text-xl font-bold text-accent">WebCraft</h2>
                 </Link>
               </div>
+
+              {/* Chat Title Centered */}
+              {chatTitle && (
+                <div className="text-center flex-1">
+                  <h3 className="text-primary_text font-semibold text-lg truncate w-[250px] mx-auto">
+                    {chatTitle}
+                  </h3>
+                </div>
+              )}
 
               {/* Profile or Sign-In */}
               <div className="flex items-center space-x-2">

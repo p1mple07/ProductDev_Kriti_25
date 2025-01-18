@@ -5,7 +5,6 @@ import useSignOut from "../hooks/useSignOut";
 import { 
   ArrowRightOnRectangleIcon, 
   EnvelopeIcon, 
-  MapPinIcon, 
   CalendarIcon, 
   PencilIcon 
 } from "@heroicons/react/24/outline";
@@ -63,15 +62,10 @@ const ProfileCard = () => {
               </button>
             </div>
 
-            <p className="text-gray-300 mt-3 leading-relaxed">
-              {currentUser.bio || "No bio provided"}
-            </p>
-
             {/* User Details with hover effects */}
             <div className="mt-6 space-y-4">
               {[
                 { Icon: EnvelopeIcon, value: currentUser.email || "user@example.com" },
-                { Icon: MapPinIcon, value: currentUser.location || "Location not specified" },
                 { Icon: CalendarIcon, value: `Joined ${currentUser.createdaAt || "January 2024"}` },
               ].map(({ Icon, value }, index) => (
                 <div key={index} className="flex items-center text-gray-400 transition-all duration-300 hover:translate-x-2 hover:text-green-400">

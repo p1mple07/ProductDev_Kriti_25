@@ -1,35 +1,27 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { deleteAllChatsStart, deleteAllChatsSuccess, deleteAllChatsFailure } from "../redux/chat/chatSlice";
 import { toast } from "sonner";
 
 const useDeleteAllChats = () => {
-  const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
-
-  const handleDeleteAllChats = async () => {
-    setShowModal(false);
+  const deleteAllChats = async () => {
     try {
-      dispatch(deleteAllChatsStart());
-      const res = await fetch(`/api/chat/`, {
+      const res = await fetch("/api/chat", {
         method: "DELETE",
         credentials: "include",
       });
-      const data = await res.json();
+
       if (!res.ok) {
-        dispatch(deleteAllChatsFailure(data.message));
-        toast.error(data.message);
-      } else {
-        dispatch(deleteAllChatsSuccess());
-        toast.success("All chats deleted successfully");
+        const data = await res.json();
+        throw new Error(data.message);
       }
+
+      toast.success("All chats deleted successfully!");
     } catch (error) {
-      dispatch(deleteAllChatsFailure(error.message));
-      toast.error(error.message);
+      console.error("Delete all chats error:", error.message);
+      toast.error(`Failed to delete all chats: ${error.message}`);
+      throw error;
     }
   };
 
-  return { showModal, setShowModal, handleDeleteAllChats };
+  return { deleteAllChats };
 };
 
 export default useDeleteAllChats;
