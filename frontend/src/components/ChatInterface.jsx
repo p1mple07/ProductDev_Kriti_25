@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
 const ChatInterface = ({ chat, isExpanded }) => {
   const [prompt, setPrompt] = useState("");
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chat?.promptsAndResponses]);
 
   const handleSend = () => {
     if (prompt.trim()) {
@@ -13,37 +22,47 @@ const ChatInterface = ({ chat, isExpanded }) => {
 
   return (
     <div
-      className={`transition-all duration-500 flex flex-col bg-gradient-to-b from-[#0A0F14] to-black text-primary_text ${
-        isExpanded ? "opacity-0 h-0 hidden" : "flex-1 opacity-100"
+      className={`transition-all duration-500 flex flex-col bg-gradient-to-b from-gray-900 to-black text-gray-100 h-full ${
+        isExpanded ? "opacity-0 hidden" : "flex-1 opacity-100"
       }`}
     >
-      {/* Chat Messages (Scrollable) */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      {/* Chat Messages */}
+      <div className="flex-1 p-4 overflow-y-auto min-h-0 custom-scrollbar">
         {chat?.promptsAndResponses?.map((entry, index) => (
-          <div key={index} className="mb-4">
-            <div className="p-4 rounded-md bg-accent text-white mb-2">{entry.prompt}</div>
-            <div className="p-4 rounded-md bg-tertiary">{entry.response.textOverview}</div>
+          <div key={index} className="mb-6 last:mb-2">
+            {/* User message */}
+            <div className="p-4 rounded-lg bg-cyan-900 bg-opacity-50 text-white mb-4 shadow-lg">
+              {entry.prompt}
+            </div>
+            {/* Response */}
+            <div className="p-4 rounded-lg bg-gray-800 bg-opacity-50 text-gray-200 shadow-lg">
+              {entry.response.textOverview}
+            </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-4 border-t border-border flex items-center bg-secondary">
-        <input
-          type="text"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Enter your prompt..."
-          className="flex-1 bg-tertiary text-primary_text p-2 rounded-md focus:ring-2 focus:ring-accent"
-          disabled={!chat}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
-        <button
-          onMouseDown={handleSend}
-          className="ml-4 bg-accent p-2 rounded-md text-white hover:bg-hover_accent disabled:opacity-50"
-          disabled={!chat}
-        >
-          <PaperAirplaneIcon className="w-5 h-5" />
-        </button>
+      {/* Input Area */}
+      <div className="p-4 border-t border-gray-700 bg-gray-900 flex-shrink-0">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Enter your prompt..."
+            className="flex-1 px-4 py-2.5 bg-gray-800 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 placeholder-gray-400"
+            disabled={!chat}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          />
+          <button
+            onClick={handleSend}
+            disabled={!chat}
+            className="px-4 py-2.5 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-800 font-medium rounded-lg text-sm inline-flex items-center transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <PaperAirplaneIcon className="w-5 h-5" />
+          </button>
+        </div>
       </div>
     </div>
   );

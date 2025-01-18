@@ -19,7 +19,7 @@ const useFetchChatTitles = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  return { chats, loading, error };
+  return { chats, setChats, loading, error };
 };
 
 export default useFetchChatTitles;

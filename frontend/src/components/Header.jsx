@@ -42,7 +42,7 @@ function Header({ chatTitle }) {
                 {currentUser ? (
                   <div className="relative flex items-center">
                     <img
-                      src={currentUser.profilePicture}
+                      src={currentUser.profilePicture || "/userphoto.jpg"}
                       alt="Profile"
                       referrerPolicy="no-referrer"
                       className="h-8 w-8 rounded-full cursor-pointer"

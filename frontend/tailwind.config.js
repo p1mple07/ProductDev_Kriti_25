@@ -30,16 +30,15 @@ export default {
         // accent: "#10A37F",         // Main teal-green accent
         // hover_accent: "#1ABC9C",   // Brighter teal for hover effects
 
-        primary: "#0A0F14",        // Deep navy black
-        secondary: "#131A20",      // Dark slate gray
-        tertiary: "#1B242C",       // Neutral dark blue-gray
-        border: "#2C3E50",         // Muted steel gray
-        background: "#0A0D12",     // Almost black
-        primary_text: "#E5E7EB",   // Soft off-white
-        secondary_text: "#A1AAB5", // Muted grayish-blue for readability
-        accent: "#1B9AAA",         // Dark teal for subtle highlights
-        hover_accent: "#128C8C",   // Even darker teal for hover effects
-        
+        "primary": "#0C1218",        // Deeper navy black for main elements
+        "secondary": "#151E26",      // Richer slate gray for secondary surfaces
+        "tertiary": "#1E2A34",       // Warmer dark blue-gray for layering
+        "border": "#2F4356",         // Slightly warmer steel gray for better definition
+        "background": "#090C11",     // Darker background for more contrast
+        "primary_text": "#F0F2F4",   // Brighter off-white for better readability
+        "secondary_text": "#B0BAC5", // Lighter grayish-blue for better contrast
+        "accent": "#0891B2",         // Deep cyan as the accent color
+        "hover_accent": "#00B0C8",   // Lighter cyan for hover states
       },
       animation: {
         vote: "vote 1s ease-in-out",

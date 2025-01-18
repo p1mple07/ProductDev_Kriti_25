@@ -23,7 +23,7 @@ export default function Profile() {
           <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>
             <div className="w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full my-6">
               <img
-                src={currentUser.profilePicture}
+                src={currentUser.profilePicture || "/userphoto.jpg"}
                 alt="user"
                 className="rounded-full w-full h-full object-cover border-8 border-border"
               />

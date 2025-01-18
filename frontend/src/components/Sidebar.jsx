@@ -1,26 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useFetchChatTitles from "../hooks/useFetchChatTitles";
 import useDeleteChat from "../hooks/useDeleteChat";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { TrashIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
-  const { chats } = useFetchChatTitles();
-  const { handleDeleteChat } = useDeleteChat();
+  const { chats, setChats } = useFetchChatTitles();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { handleDeleteChat } = useDeleteChat(setChats, navigate, location);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter chats based on the search term
   const filteredChats = chats.filter(chat =>
     chat.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="relative group">
-      {/* Sidebar */}
       <div className="absolute top-0 left-0 h-full bg-primary text-primary_text transition-all duration-300 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 z-10 w-64">
         <div className="p-4">
-          <Link to="/" className="w-full block bg-accent hover:bg-hover_accent p-2 rounded-md mb-4 text-center">
-            New Chat
+          <Link to="/" className="flex items-center bg-accent hover:bg-hover_accent p-2 rounded-md mb-4">
+            <PlusIcon className="w-5 h-5 mr-2" />
+            <span>New Chat</span>
           </Link>
           <input
             type="text"
@@ -46,7 +47,6 @@ const Sidebar = () => {
           </ul>
         </div>
       </div>
-      {/* Invisible hover area */}
       <div className="absolute top-0 left-0 h-full w-4 group-hover:w-64 z-0" />
     </div>
   );
