@@ -1,9 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import useGemini from "../hooks/useGemini";
+import useUpdateChat from "../hooks/useUpdateChat";
+import { handleSend } from "../utils/handleSend";
 
-const ChatInterface = ({ chat, isExpanded }) => {
+const ChatInterface = ({ chat, setChat, isExpanded }) => {
   const [prompt, setPrompt] = useState("");
   const messagesEndRef = useRef(null);
+  const { generateResponse, loading } = useGemini();
+  const { updateChat } = useUpdateChat(setChat);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -13,11 +18,9 @@ const ChatInterface = ({ chat, isExpanded }) => {
     scrollToBottom();
   }, [chat?.promptsAndResponses]);
 
-  const handleSend = () => {
-    if (prompt.trim()) {
-      // Handle sending prompt logic
-      setPrompt("");
-    }
+  const handleSendClick = async () => {
+    await handleSend({ prompt, chat, setChat, updateChat, generateResponse });
+    setPrompt("");
   };
 
   return (
@@ -52,15 +55,16 @@ const ChatInterface = ({ chat, isExpanded }) => {
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Enter your prompt..."
             className="flex-1 px-4 py-2.5 bg-gray-800 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 placeholder-gray-400"
-            disabled={!chat}
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            disabled={!chat || loading}
+            onKeyDown={(e) => e.key === "Enter" && handleSendClick()}
           />
           <button
-            onClick={handleSend}
-            disabled={!chat}
+            onClick={handleSendClick}
+            disabled={!chat || loading}
             className="px-4 py-2.5 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-800 font-medium rounded-lg text-sm inline-flex items-center transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <PaperAirplaneIcon className="w-5 h-5" />
+            {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> 
+            : <PaperAirplaneIcon className="w-5 h-5" />}
           </button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-const useUpdateChat = () => {
+const useUpdateChat = (setChat) => {
   const updateChat = async (chatId, updatedData) => {
     try {
       const res = await fetch(`/api/chat/${chatId}`, {
@@ -13,7 +13,10 @@ const useUpdateChat = () => {
         throw new Error(data.message);
       }
 
-      return await res.json();
+      const updatedChat = await res.json();
+      setChat(updatedChat);
+
+      return updatedChat;
     } catch (error) {
       console.error("Update chat error:", error.message);
       throw error;

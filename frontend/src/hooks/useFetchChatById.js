@@ -21,7 +21,7 @@ const useFetchChatById = (chatId) => {
       .finally(() => setLoading(false));
   }, [chatId]);
 
-  return { chat, loading, error };
+  return { chat, setChat, loading, error };
 };
 
 export default useFetchChatById;

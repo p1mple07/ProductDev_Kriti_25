@@ -1,52 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { PaperAirplaneIcon, PaperClipIcon, SparklesIcon, XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
+import { PaperAirplaneIcon, PaperClipIcon, SparklesIcon } from "@heroicons/react/24/solid";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
+import { toast } from "sonner";
+import { handleChatCreation } from "../utils/handleChatCreation";
+import useCreateChat from "../hooks/useCreateChat";
+import useGemini from "../hooks/useGemini";
 
 const NewChat = () => {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [userPrompt, setUserPrompt] = useState("");
   const [file, setFile] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
+  const { createChat, loading, setLoading} = useCreateChat();
+  const { generateResponse } = useGemini();
   const [greeting, setGreeting] = useState("");
 
   useEffect(() => {
     const hour = new Date().getHours();
-    if (hour < 12) {
-      setGreeting("Good Morning");
-    } else if (hour < 18) {
-      setGreeting("Good Afternoon");
-    } else {
-      setGreeting("Good Evening");
-    }
+    setGreeting(hour < 12 ? "Good Morning" : hour < 18 ? "Good Afternoon" : "Good Evening");
   }, []);
 
-  const handleSendMessage = () => {
-    if (message.trim() === "" && !file) return;
+  const handleSendMessage = async () => {
+    setLoading(true)
+    if (!userPrompt.trim() && !file) {
+      toast.warning("Please enter a prompt or upload a file.");
+      setLoading(false)
+      return;
+    }
 
-    const newMessage = {
-      text: message,
-      isUser: true,
-      file: file ? file.name : null,
-    };
+    await handleChatCreation({
+      prompt: userPrompt,
+      file,
+      createChat,
+      generateResponse,
+    });
 
-    setMessages([...messages, newMessage]);
-    setMessage("");
+    setUserPrompt("");
     setFile(null);
   };
 
   const handleFileUpload = (event) => {
     const uploadedFile = event.target.files[0];
     if (uploadedFile) {
+      if (uploadedFile.type !== "text/plain") {
+        toast.error("Only .txt files are supported.");
+        return;
+      }
       setFile(uploadedFile);
     }
   };
 
   const suggestedPrompts = [
-    "Generate an interview question",
-    "Summarize this document",
-    "Help me debug my code",
+    "Generate a modern website layout",
+    "Create a portfolio site with a contact form",
+    "Build a responsive landing page",
   ];
 
   return (
@@ -55,25 +63,27 @@ const NewChat = () => {
       <Header />
 
       <div className="flex flex-1">
-        {/* Sidebar (Hidden by default, shown on hover) */}
-          <Sidebar />
+        {/* Sidebar */}
+        <Sidebar />
 
-        {/* Main Chat Area */}
-        <div className="flex flex-col flex-1 justify-center items-center px-6">
-          <div className="text-3xl font-semibold mb-4">✨ {greeting}, {currentUser.username}</div>
+        {/* Main Content */}
+        <div className="flex flex-col flex-1 justify-center items-center px-6 -mt-12"> 
+          {/* Shifted Upward */}
+          <div className="text-3xl font-semibold mb-4 flex items-center gap-2">
+            ✨ {greeting}, {currentUser.username}
+          </div>
 
-          {/* Welcome Message */}
           <p className="text-secondary_text text-center mb-6">
-            Start a new conversation or choose from the suggestions below.
+            Enter your website idea below or select a suggestion.
           </p>
 
           {/* Suggested Prompts */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 w-full max-w-3xl">
             {suggestedPrompts.map((prompt, index) => (
               <button
                 key={index}
-                onClick={() => setMessage(prompt)}
-                className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary_text rounded-lg hover:bg-tertiary transition-all"
+                onClick={() => setUserPrompt(prompt)}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-all shadow-md"
               >
                 <SparklesIcon className="w-5 h-5 text-accent" />
                 {prompt}
@@ -81,39 +91,45 @@ const NewChat = () => {
             ))}
           </div>
 
-          {/* Chat Box */}
-          <div className="w-full max-w-xl h-28 flex items-center bg-secondary rounded-3xl p-3 shadow-lg relative">
-            {/* File Upload Button */}
-            <label className="cursor-pointer mr-2">
-              <PaperClipIcon className="w-6 h-6 text-primary_text" />
-              <input type="file" className="hidden" onChange={handleFileUpload} />
-            </label>
-
-            {/* Input Field */}
-            <input
-              type="text"
-              placeholder="How can I help you today?"
-              className="flex-1 bg-transparent outline-none text-lg px-2"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+          {/* Chat Input Box */}
+          <div className="w-full max-w-2xl flex flex-col bg-gray-900 rounded-2xl p-3 shadow-lg">
+            {/* Expanding Input Field with Custom Scrollbar */}
+            <textarea
+              placeholder="Describe your website idea..."
+              className="w-full bg-transparent outline-none text-lg p-3 resize-none overflow-y-auto max-h-64 custom-scrollbar"
+              rows={2}
+              value={userPrompt}
+              onChange={(e) => setUserPrompt(e.target.value)}
+              style={{ minHeight: "48px", height: "auto" }}
             />
 
-            {/* Send Button */}
-            <button
-              onClick={handleSendMessage}
-              className="bg-accent text-white p-2 rounded-full hover:bg-hover_accent transition-all"
-            >
-              <PaperAirplaneIcon className="w-6 h-6" />
-            </button>
-          </div>
+            {/* File Upload & Send Button */}
+            <div className="flex justify-between items-center mt-3">
+              {/* File Upload */}
+              <label className="cursor-pointer flex items-center gap-2">
+                <PaperClipIcon className="w-6 h-6 text-gray-400" />
+                <input type="file" className="hidden" onChange={handleFileUpload} />
+                {file && <span className="text-gray-300">{file.name}</span>}
+              </label>
 
-          {/* File Preview (Absolute Positioning) */}
-          {file && (
-            <div className="absolute bottom-60 bg-tertiary px-3 py-1 rounded-lg text-secondary_text flex items-center gap-2">
-              📄 {file.name}
-              <XMarkIcon className="w-5 h-5 text-red-400 cursor-pointer" onClick={() => setFile(null)} />
+              {/* Send Button */}
+              <button
+                onClick={handleSendMessage}
+                disabled={loading}
+                className={`px-4 py-2 rounded-full transition-all ${
+                  loading
+                    ? "bg-gray-600 cursor-not-allowed"
+                    : "bg-cyan-600 text-white hover:bg-cyan-700"
+                }`}
+              >
+                {loading ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <PaperAirplaneIcon className="w-6 h-6" />
+                )}
+              </button>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

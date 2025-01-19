@@ -1,5 +1,13 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+
 const useCreateChat = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const createChat = async (chatData) => {
+    setLoading(true);
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -13,14 +21,18 @@ const useCreateChat = () => {
         throw new Error(data.message);
       }
 
-      return await res.json();
+      const newChat = await res.json();
+      navigate(`/chat/${newChat._id}`);
+      return newChat;
     } catch (error) {
+      toast.error(`Error: ${error.message}`);
       console.error("Create chat error:", error.message);
-      throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { createChat };
+  return { createChat, loading , setLoading};
 };
 
 export default useCreateChat;

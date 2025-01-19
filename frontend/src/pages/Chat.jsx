@@ -10,7 +10,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 const Chat = () => {
   const { id: chatId } = useParams();
-  const { chat, loading } = useFetchChatById(chatId);
+  const { chat, setChat, loading } = useFetchChatById(chatId);
   const [isCodeExpanded, setIsCodeExpanded] = useState(false);
   
   const toggleCodeExpand = () => {
@@ -28,7 +28,7 @@ const Chat = () => {
           {loading ? (
             <LoadingSpinner />
           ) : chat ? (
-            <ChatInterface chat={chat} isExpanded={isCodeExpanded}/>
+            <ChatInterface chat={chat} isExpanded={isCodeExpanded} setChat={setChat}/>
           ) : (
             <div className="flex justify-center items-center flex-1 text-xl font-semibold text-red-500">
               Chat not found.

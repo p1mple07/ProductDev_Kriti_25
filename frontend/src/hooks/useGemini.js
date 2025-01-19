@@ -1,42 +1,40 @@
 import { useState } from "react";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
+
 
 const useGemini = () => {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const processText = async (text) => {
+  const generateResponse = async (prompt) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`, {
+      const res = await fetch(`${API_URL}?key=${API_KEY}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text }] }],
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch response from Gemini API");
-      }
+      if (!res.ok) throw new Error("Failed to fetch response from Gemini");
 
-      const data = await response.json();
-      setResult(data.candidates[0].content.parts[0].text);
-      return data.candidates[0].content.parts[0].text;
+      const data = await res.json();
+      const textResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response received";
+
+      return textResponse;
     } catch (err) {
+      console.error("Gemini API Error:", err);
       setError(err.message);
+      return null;
     } finally {
       setLoading(false);
     }
   };
 
-  return { processText, loading, result, error };
+  return { generateResponse, loading, error };
 };
 
 export default useGemini;
