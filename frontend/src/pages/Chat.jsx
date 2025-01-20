@@ -21,7 +21,7 @@ const Chat = () => {
     <div className="flex flex-col h-screen overflow-hidden">
       <Header chatTitle={chat?.title}/>
 
-      <div className="flex flex-1 bg-background text-primary_text min-h-0">
+      <div className="flex flex-1 bg-primary text-primary_text min-h-0">
         <Sidebar />
 
         <div className="flex flex-col flex-1 transition-all duration-500">

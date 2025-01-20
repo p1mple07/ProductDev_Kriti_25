@@ -58,7 +58,7 @@ const NewChat = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-[#0A0F14] to-black text-primary_text">
+    <div className="flex flex-col h-screen bg-gradient-to-b from-secondary to-background text-primary_text">
       {/* Header */}
       <Header />
 
@@ -83,7 +83,7 @@ const NewChat = () => {
               <button
                 key={index}
                 onClick={() => setUserPrompt(prompt)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-all shadow-md"
+                className="flex items-center gap-2 px-4 py-2 bg-tertiary text-primary_text rounded-lg hover:bg-gray-700 transition-all shadow-md"
               >
                 <SparklesIcon className="w-5 h-5 text-accent" />
                 {prompt}
@@ -92,7 +92,7 @@ const NewChat = () => {
           </div>
 
           {/* Chat Input Box */}
-          <div className="w-full max-w-2xl flex flex-col bg-gray-900 rounded-2xl p-3 shadow-lg">
+          <div className="w-full max-w-2xl flex flex-col bg-secondary rounded-2xl p-3 shadow-lg">
             {/* Expanding Input Field with Custom Scrollbar */}
             <textarea
               placeholder="Describe your website idea..."
@@ -119,11 +119,11 @@ const NewChat = () => {
                 className={`px-4 py-2 rounded-full transition-all ${
                   loading
                     ? "bg-gray-600 cursor-not-allowed"
-                    : "bg-cyan-600 text-white hover:bg-cyan-700"
+                    : "bg-accent text-primary_text hover:bg-hover_accent"
                 }`}
               >
                 {loading ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-5 h-5 border-2 border-primary_text border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   <PaperAirplaneIcon className="w-6 h-6" />
                 )}

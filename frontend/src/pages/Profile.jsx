@@ -17,7 +17,7 @@ export default function Profile() {
     const { handleDeleteUser } = useDeleteUser();
   
     return (
-      <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#0A0F14] to-black">
+      <div className="flex flex-col min-h-screen bg-gradient-to-b from-secondary to-background">
         <Header />
         <div className="max-w-lg mx-auto p-3 w-full flex-1 flex flex-col justify-center">
           <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>

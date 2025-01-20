@@ -12,7 +12,7 @@ const CodeDisplay = ({ chat, isExpanded }) => {
 
   return (
     <div
-      className={`transition-all duration-500 bg-gradient-to-b from-gray-900 to-black flex min-h-0 ${
+      className={`transition-all duration-500 bg-gradient-to-b from-secondary to-background flex min-h-0 ${
         isExpanded ? "w-full" : "w-3/5"
       }`}
     >
@@ -20,13 +20,13 @@ const CodeDisplay = ({ chat, isExpanded }) => {
         // Expanded mode
         <div className="w-full flex min-h-0">
           <div className="w-1/2 flex flex-col min-h-0 border-r border-gray-700">
-            <div className="flex space-x-2 bg-gray-800 p-2 rounded-lg m-4 flex-shrink-0">
+            <div className="flex space-x-2 bg-tertiary p-2 rounded-lg m-4 flex-shrink-0">
               {["html", "css", "script"].map((type) => (
                 <button
                   key={type}
                   className={`px-4 py-2 text-sm rounded-lg focus:outline-none transition-colors ${
                     selectedCodeType === type 
-                      ? "bg-cyan-600 text-white"
+                      ? "bg-accent text-primary_text"
                       : "bg-gray-700 text-gray-300 hover:bg-gray-600"
                   }`}
                   onClick={() => setSelectedCodeType(type)}
@@ -35,7 +35,7 @@ const CodeDisplay = ({ chat, isExpanded }) => {
                 </button>
               ))}
             </div>
-            <div className="flex-1 bg-gray-800 m-4 mt-0 rounded-lg text-gray-200 custom-scrollbar overflow-y-auto">
+            <div className="flex-1 bg-tertiary m-4 mt-0 rounded-lg text-gray-200 custom-scrollbar overflow-y-auto">
               <pre className="p-4 whitespace-pre-wrap">
                 <code>{lastResponse?.[selectedCodeType]}</code>
               </pre>
@@ -52,11 +52,11 @@ const CodeDisplay = ({ chat, isExpanded }) => {
       ) : (
         // Collapsed mode
         <div className="w-full flex flex-col min-h-0">
-          <div className="flex space-x-2 bg-gray-800 p-2 rounded-lg m-4 flex-shrink-0">
+          <div className="flex space-x-2 bg-tertiary p-2 rounded-lg m-4 flex-shrink-0">
             <button
               className={`flex items-center px-4 py-2 text-sm rounded-lg focus:outline-none transition-colors ${
                 selectedTab === "code"
-                  ? "bg-cyan-600 text-white"
+                  ? "bg-accent text-primary_text"
                   : "bg-gray-700 text-gray-300 hover:bg-gray-600"
               }`}
               onClick={() => setSelectedTab("code")}
@@ -67,7 +67,7 @@ const CodeDisplay = ({ chat, isExpanded }) => {
             <button
               className={`flex items-center px-4 py-2 text-sm rounded-lg focus:outline-none transition-colors ${
                 selectedTab === "preview"
-                  ? "bg-cyan-600 text-white"
+                  ? "bg-accent text-primary_text"
                   : "bg-gray-700 text-gray-300 hover:bg-gray-600"
               }`}
               onClick={() => setSelectedTab("preview")}
@@ -81,7 +81,7 @@ const CodeDisplay = ({ chat, isExpanded }) => {
             {selectedTab === "code" ? (
               <div className="flex flex-col h-full">
                 <select
-                  className="w-full bg-gray-800 text-gray-200 p-2 rounded-lg mb-2 flex-shrink-0 border border-gray-700 focus:ring-2 focus:ring-cyan-600"
+                  className="w-full bg-tertiary text-gray-200 p-2 rounded-lg mb-2 flex-shrink-0 border border-gray-700 focus:ring-2 focus:ring-accent"
                   value={selectedCodeType}
                   onChange={(e) => setSelectedCodeType(e.target.value)}
                 >
@@ -89,7 +89,7 @@ const CodeDisplay = ({ chat, isExpanded }) => {
                   <option value="css">CSS</option>
                   <option value="script">Script</option>
                 </select>
-                <div className="flex-1 bg-gray-800 rounded-lg text-gray-200 custom-scrollbar overflow-y-auto">
+                <div className="flex-1 bg-tertiary rounded-lg text-gray-200 custom-scrollbar overflow-y-auto">
                   <pre className="p-4 whitespace-pre-wrap">
                     <code>{lastResponse?.[selectedCodeType]}</code>
                   </pre>

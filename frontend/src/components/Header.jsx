@@ -5,6 +5,7 @@ import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
 import useSignOut from "../hooks/useSignOut";
 import ProfileCard from "./ProfileCard";
+import WebCraftLogo from "./WebCraftLogo";
 
 function Header({ chatTitle }) {
   const [isProfileCardVisible, setIsProfileCardVisible] = useState(false);
@@ -23,9 +24,7 @@ function Header({ chatTitle }) {
             <div className="flex justify-between items-center h-12">
               {/* Logo */}
               <div className="flex items-center">
-                <Link to="/">
-                  <h2 className="text-xl font-bold text-accent">WebCraft</h2>
-                </Link>
+                <WebCraftLogo />
               </div>
 
               {/* Chat Title Centered */}

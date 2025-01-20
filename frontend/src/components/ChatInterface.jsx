@@ -54,14 +54,14 @@ const ChatInterface = ({ chat, setChat, isExpanded }) => {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Enter your prompt..."
-            className="flex-1 px-4 py-2.5 bg-gray-800 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-cyan-600 focus:border-cyan-600 placeholder-gray-400"
+            className="flex-1 px-4 py-2.5 bg-gray-800 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-accent focus:border-accent placeholder-gray-400"
             disabled={!chat || loading}
             onKeyDown={(e) => e.key === "Enter" && handleSendClick()}
           />
           <button
             onClick={handleSendClick}
             disabled={!chat || loading}
-            className="px-4 py-2.5 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-800 font-medium rounded-lg text-sm inline-flex items-center transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2.5 text-white bg-accent hover:bg-hover_accent focus:ring-4 focus:ring-cyan-800 font-medium rounded-lg text-sm inline-flex items-center transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> 
             : <PaperAirplaneIcon className="w-5 h-5" />}
