@@ -1,4 +1,6 @@
 import getSystemPrompt, { extractJsonFromResponse } from "./systemPrompt";
+import { updateHtmlContent } from "./addImage";
+
 
 export const handleChatCreation = async ({ prompt, file, generateResponse, createChat }) => {
   if (!prompt.trim() && !file) {
@@ -25,15 +27,17 @@ export const handleChatCreation = async ({ prompt, file, generateResponse, creat
     if (!responseText) return;
 
     const responseData = extractJsonFromResponse(responseText);
-    if (!responseData) return;
 
+
+    if (!responseData) return;
+    const htmlWithImage = await updateHtmlContent(responseData.html);
     // console.log("responseData", responseData);
     const newChat = {
       title: responseData.title || prompt.slice(0, 50),
       prompt: finalPrompt,
       response: {
         textOverview: responseData.textOverview || "No overview provided.",
-        html: responseData.html || "",
+        html: htmlWithImage || "",
         css: responseData.css || "",
         script: responseData.script || "",
       },

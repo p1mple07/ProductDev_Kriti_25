@@ -17,7 +17,8 @@ const getSystemPrompt = (userPrompt) => {
     The landing page must have a clean, visually appealing design that follows best UI/UX practices, ensuring smooth scrolling and adaptability to all screen sizes.  
     If additional features are specified, implement them while also including fundamental landing page elements.  
   
-    **Key Requirements:**  
+    **Key Requirements:** 
+    - If user requests to make a website which is already hosted in the web then try to clone it. 
     - Ensure full **responsiveness** using CSS Grid, Flexbox, and media queries.  
     - Implement **smooth scrolling** for better navigation.  
     - Follow a professional color palette and modern typography.  
@@ -40,10 +41,12 @@ const getSystemPrompt = (userPrompt) => {
   
     **Example Features That Can Be Included:**  
     - Contact forms  
-    - Animations (e.g., fade-in effects)  
+    - Animations (e.g., fade-in effects, hover effect)  
     - Sticky navigation bar  
     - Image sliders  
     - Dark mode support  
+    - use symbols and icons 
+    - inside the alt keyword of img tag,  specify a keyword by which the example image can be search in web
   
     Ensure the output is clean, well-structured, and follows the latest web development standards.
     `;

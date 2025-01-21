@@ -1,4 +1,5 @@
 import getSystemPrompt, { extractJsonFromResponse } from "./systemPrompt";
+import { updateHtmlContent } from "./addImage";
 
 export const handleSend = async ({ prompt, chat, setChat, updateChat, generateResponse }) => {
   if (!prompt.trim()) return;
@@ -11,13 +12,14 @@ export const handleSend = async ({ prompt, chat, setChat, updateChat, generateRe
 
     const responseData = extractJsonFromResponse(responseText);
     if (!responseData) return;
+    const htmlWithImage = await updateHtmlContent(responseData.html);
 
     // Structure response
     const newEntry = {
       prompt,
       response: {
         textOverview: responseData.textOverview || "No overview provided.",
-        html: responseData.html || "",
+        html: htmlWithImage || "",
         css: responseData.css || "",
         script: responseData.script || "",
       },
