@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   return (
     <div className="relative group">
-      <div className="absolute top-0 left-0 h-full bg-primary text-primary_text transition-all duration-300 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 z-10 w-64">
+      <div className="absolute top-0 left-0 h-full bg-primary text-primary_text transition-all duration-300 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 z-10 w-64 overflow-y-auto">
         <div className="p-4">
           <Link to="/" className="flex items-center bg-accent hover:bg-hover_accent p-2 rounded-md mb-4">
             <PlusIcon className="w-5 h-5 mr-2" />
