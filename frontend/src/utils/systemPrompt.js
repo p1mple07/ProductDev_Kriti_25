@@ -35,7 +35,7 @@ const getSystemPrompt = (userPrompt) => {
       "title:": "Landing Page Title",
       "textOverview": "Short summary of the landing page purpose.",
       "html": "Complete HTML structure for the landing page. Don't include inline style.",
-      "css": "CSS styles ensuring responsiveness and modern design.images should cover the div",
+      "css": "CSS styles ensuring responsiveness and modern design. Images should cover the div",
       "script": "Optional JavaScript for interactive features."
     }
   
