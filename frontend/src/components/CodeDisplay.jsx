@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { useSelector, useDispatch } from "react-redux";
 
 const CodeDisplay = ({ chat, isExpanded }) => {
   const [selectedTab, setSelectedTab] = useState("preview");
   const [selectedCodeType, setSelectedCodeType] = useState("html");
+  const { codeBody} = useSelector((state) => state.code);
 
   if (!chat) return null;
+  let lastResponse = codeBody;
 
-  const { promptsAndResponses } = chat;
-  const lastResponse = promptsAndResponses?.[promptsAndResponses.length - 1]?.response;
+  // const { promptsAndResponses } = chat;
+  // const lastResponse = promptsAndResponses?.[promptsAndResponses.length - 1]?.response;
 
   return (
     <div
@@ -45,7 +48,7 @@ const CodeDisplay = ({ chat, isExpanded }) => {
             <iframe
               title="Preview"
               className="flex-1 w-full bg-white rounded-lg shadow-lg"
-              srcDoc={`<html><head><style>${lastResponse?.css}</style></head><body>${lastResponse?.html}<script>${lastResponse?.script}</script></body></html>`}
+              srcDoc={`<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" /><style>${lastResponse?.css}</style></head><body>${lastResponse?.html}<script>${lastResponse?.script}</script></body></html>`}
             />
           </div>
         </div>
@@ -100,7 +103,7 @@ const CodeDisplay = ({ chat, isExpanded }) => {
                 <iframe
                   title="Preview"
                   className="w-full h-full"
-                  srcDoc={`<html><head><style>${lastResponse?.css}</style></head><body>${lastResponse?.html}<script>${lastResponse?.script}</script></body></html>`}
+                  srcDoc={`<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" /><style>${lastResponse?.css}</style></head><body>${lastResponse?.html}<script>${lastResponse?.script}</script></body></html>`}
                 />
               </div>
             )}

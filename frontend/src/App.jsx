@@ -5,7 +5,7 @@ import SignIn from "./pages/SignIn";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
-import Chat from "./pages/chat";
+import Chat from "./pages/Chat";
 import NewChat from "./pages/NewChat";
 
 function App() {

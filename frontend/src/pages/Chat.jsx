@@ -7,11 +7,25 @@ import Header from "../components/Header";
 import LoadingSpinner from "../components/LoadingSpinner";
 import useFetchChatById from "../hooks/useFetchChatById";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { useDispatch } from "react-redux";
+import { setCode } from "../redux/codeDisplaySlice";
 
 const Chat = () => {
   const { id: chatId } = useParams();
   const { chat, setChat, loading } = useFetchChatById(chatId);
   const [isCodeExpanded, setIsCodeExpanded] = useState(false);
+
+  const dispatch = useDispatch();
+
+
+  const promptsAndResponses = chat?.promptsAndResponses || [];
+
+  if (chat && promptsAndResponses.length > 0) {
+    dispatch(
+      setCode(promptsAndResponses[promptsAndResponses.length - 1]?.response)
+    );
+  }
+
   
   const toggleCodeExpand = () => {
     setIsCodeExpanded(!isCodeExpanded);

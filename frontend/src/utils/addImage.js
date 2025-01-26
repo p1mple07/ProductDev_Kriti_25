@@ -19,16 +19,38 @@ export function generateRandomNumber(min, max) {
     return keywords;
   }
   
-  export function replaceImagePlaceholdersUsingAlt(htmlContent, keywordImages) {
-    const imgRegex = /<img src=".*?" alt="(.*?)" .*?>/g;
+  // export function replaceImagePlaceholdersUsingAlt(htmlContent, keywordImages) {
+  //   const imgRegex = /<img src=".*?" alt="(.*?)" .*?>/g;
+  
+  //   return htmlContent.replace(imgRegex, (match, altText) => {
+  //     if (keywordImages[altText]) {
+  //       return match.replace(/src=".*?"/, `src="${keywordImages[altText]}"`);
+  //     }
+  //     return match;
+  //   });
+  // }
+
+  export async function replaceImagePlaceholdersUsingAlt(htmlContent, keywordImages) {
+    // Improved regex to match <img> tags with alt attributes
+    const imgRegex = /<img\s+[^>]*alt=["'](.*?)["'][^>]*>/g;
   
     return htmlContent.replace(imgRegex, (match, altText) => {
-      if (keywordImages[altText]) {
-        return match.replace(/src=".*?"/, `src="${keywordImages[altText]}"`);
+      // Normalize altText to prevent mismatches
+      const normalizedAltText = altText.trim().toLowerCase();
+  
+      // Check if the normalized altText exists in keywordImages
+      if (normalizedAltText in keywordImages) {
+        const newSrc = keywordImages[normalizedAltText];
+        return match.replace(/src=["'].*?["']/, `src="${newSrc}"`);
       }
+  
+      // If no match is found, return the original <img> tag
       return match;
     });
   }
+  
+
+  
   
   export async function updateHtmlContent(htmlContent) {
     // const accessKey = 'AIzaSyCkdl1G-gYQF2z04K2rNhmyrcTvwa1r0KI';
@@ -66,7 +88,10 @@ export function generateRandomNumber(min, max) {
     await Promise.all(keywords.map(fetchImages));
   
     // Replace image placeholders in the HTML content
-    const updatedHtmlContent = replaceImagePlaceholdersUsingAlt(htmlContent, keywordImages);
+    const updatedHtmlContent = await replaceImagePlaceholdersUsingAlt(htmlContent, keywordImages);
+
+    console.log(keywordImages);
+    console.log(updatedHtmlContent);
   
     return updatedHtmlContent;
   }
