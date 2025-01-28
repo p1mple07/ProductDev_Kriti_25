@@ -26,14 +26,14 @@ const getEnhancingPrompt = (userPrompt,userCode) => {
       **Key Requirements:** 
       - use your full potential to meet the requirment of the user.
       - keep the basic feature of the websites unchanged if user not mentioned anything about those.
-    
+      - add images inside html only, instead of backgroung images try to use img tag in html, not in css
       **Output Format:**  
       Return a JSON response with the following structure:
       {
         "title:": "Landing Page Title",
         "textOverview": "Short summary of the changes made,",
         "html": "Complete HTML structure for the landing page. Don't include inline style.",
-        "css": "CSS styles ensuring responsiveness and modern design. Images should cover the div",
+        "css": "CSS styles ensuring responsiveness and modern design. Images should cover the div and fix height and width of img div",
         "script": "Optional JavaScript for interactive features."
       }
     
@@ -44,7 +44,7 @@ const getEnhancingPrompt = (userPrompt,userCode) => {
       - Image sliders  
       - Dark mode support  
       - use symbols and icons 
-      - inside the alt keyword of img tag,  specify a keyword by which the example image can be search in web
+      - inside the alt keyword of img tag, specify a keyword by which the image can be search in web
     
       Ensure the output is clean, well-structured, and follows the latest web development standards.
       `;

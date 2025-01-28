@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
 import { useSelector, useDispatch } from "react-redux";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+import { HiFolderDownload } from "react-icons/hi";
 
 const CodeDisplay = ({ chat, isExpanded }) => {
   const [selectedTab, setSelectedTab] = useState("preview");
@@ -9,6 +12,19 @@ const CodeDisplay = ({ chat, isExpanded }) => {
 
   if (!chat) return null;
   let lastResponse = codeBody;
+
+  const downloadCodeAsZip = () => {
+    if (!lastResponse) return;
+
+    const zip = new JSZip();
+    zip.file("index.html", lastResponse.html || "");
+    zip.file("style.css", lastResponse.css || "");
+    zip.file("script.js", lastResponse.script || "");
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      saveAs(content, "code.zip");
+    });
+  };
 
   // const { promptsAndResponses } = chat;
   // const lastResponse = promptsAndResponses?.[promptsAndResponses.length - 1]?.response;
@@ -55,7 +71,7 @@ const CodeDisplay = ({ chat, isExpanded }) => {
       ) : (
         // Collapsed mode
         <div className="w-full flex flex-col min-h-0">
-          <div className="flex space-x-2 bg-tertiary p-2 rounded-lg m-4 flex-shrink-0">
+          <div className="relative flex space-x-2 bg-tertiary p-2 rounded-lg m-4 flex-shrink-0">
             <button
               className={`flex items-center px-4 py-2 text-sm rounded-lg focus:outline-none transition-colors ${
                 selectedTab === "code"
@@ -77,6 +93,14 @@ const CodeDisplay = ({ chat, isExpanded }) => {
             >
               <EyeIcon className="w-5 h-5 mr-2" />
               Preview
+            </button>
+
+            <button
+              className="absolute right-2 flex items-center px-4 py-2 text-sm rounded-lg bg-gray-700 text-gray-300 hover:bg-accent text-primary_text transition-colors"
+              onClick={downloadCodeAsZip}
+            >
+              <HiFolderDownload className="w-5 h-5 inline-block mr-2" />
+              Download ZIP
             </button>
           </div>
 

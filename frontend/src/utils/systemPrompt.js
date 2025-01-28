@@ -35,7 +35,7 @@ const getSystemPrompt = (userPrompt) => {
       "title:": "Landing Page Title",
       "textOverview": "Short summary of the landing page purpose.",
       "html": "Complete HTML structure for the landing page. Don't include inline style.",
-      "css": "CSS styles ensuring responsiveness and modern design. Images should cover the div",
+      "css": "CSS styles ensuring responsiveness and modern design. Images should cover the div and fix height and width of img div",
       "script": "Optional JavaScript for interactive features."
     }
   
@@ -46,7 +46,7 @@ const getSystemPrompt = (userPrompt) => {
     - Image sliders  
     - Dark mode support  
     - use symbols and icons 
-    - inside the alt keyword of img tag,  specify a keyword by which the example image can be search in web
+    - inside the alt keyword of img tag,  specify a keyword by which the image can be search in web
   
     Ensure the output is clean, well-structured, and follows the latest web development standards.
     `;
