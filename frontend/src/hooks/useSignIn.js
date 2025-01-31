@@ -22,7 +22,7 @@ const useSignIn = () => {
         dispatch(signInFailure(data.message));
       } else {
         navigate('/');
-        console.log(data);
+        // console.log(data);
         dispatch(signInSuccess(data));
       }
     } catch (error) {

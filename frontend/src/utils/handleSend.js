@@ -1,39 +1,70 @@
 import getSystemPrompt, { extractJsonFromResponse } from "./systemPrompt";
 import { updateHtmlContent } from "./addImage";
+import { toast } from 'sonner';
 
-export const handleSend = async ({ prompt, chat, setChat, updateChat, generateResponse }) => {
+export const handleSend = async ({ prompt, chat, setChat, setCodeVersion, updateChat, generateResponse }) => {
   if (!prompt.trim()) return;
 
   const formattedPrompt = getSystemPrompt(prompt);
 
   try {
+    // Optimistic update with loading state
+    setChat((prevChat) => ({
+      ...prevChat,
+      promptsAndResponses: [
+        ...(prevChat?.promptsAndResponses || []),
+        {
+          prompt,
+          response: { textOverview: "Generating response..." }
+        }
+      ]
+    }));
+
+    // Generate and process response
     const responseText = await generateResponse(formattedPrompt);
-    if (!responseText) return;
+    if (!responseText) {
+      throw new Error("Failed to generate response");
+    }
 
     const responseData = extractJsonFromResponse(responseText);
-    if (!responseData) return;
+    if (!responseData) {
+      throw new Error("Invalid response format");
+    }
+
     const htmlWithImage = await updateHtmlContent(responseData.html);
 
-    // Structure response
-    const newEntry = {
+    // Update local state with final response
+    setChat((prevChat) => ({
+      ...prevChat,
+      promptsAndResponses: [
+        ...(prevChat?.promptsAndResponses || []).slice(0, -1),
+        {
+          prompt,
+          response: { textOverview: responseData.textOverview || "No overview provided." }
+        }
+      ]
+    }));
+
+    // Send to backend
+    await updateChat(chat._id, {
       prompt,
       response: {
         textOverview: responseData.textOverview || "No overview provided.",
         html: htmlWithImage || "",
         css: responseData.css || "",
-        script: responseData.script || "",
-      },
-    };
+        script: responseData.script || ""
+      }
+    }, setCodeVersion);
 
-    // Update chat state locally
+  } catch (error) {
+    // Revert optimistic update
     setChat((prevChat) => ({
       ...prevChat,
-      promptsAndResponses: [...(prevChat?.promptsAndResponses || []), newEntry],
+      promptsAndResponses: (prevChat?.promptsAndResponses || []).slice(0, -1)
     }));
-
-    // Send only the new prompt and response to the backend
-    await updateChat(chat._id, newEntry);
-  } catch (error) {
-    console.error("Error fetching response:", error);
+    
+    // Show error toast
+    toast.error(error.message || "Failed to process your request");
+    console.error("Error handling message:", error);
   }
 };

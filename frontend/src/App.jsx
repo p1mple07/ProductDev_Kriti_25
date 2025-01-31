@@ -18,7 +18,7 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/chat/:chatId" element={<Chat />} />
           <Route path="/" element={<NewChat />} />
           <Route path="/profile" element={<Profile />} />
         </Route>

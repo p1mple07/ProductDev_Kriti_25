@@ -7,33 +7,21 @@ import Header from "../components/Header";
 import LoadingSpinner from "../components/LoadingSpinner";
 import useFetchChatById from "../hooks/useFetchChatById";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { useDispatch } from "react-redux";
-import { setCode } from "../redux/codeDisplaySlice";
 
 const Chat = () => {
-  const { id: chatId } = useParams();
-  const { chat, setChat, loading } = useFetchChatById(chatId);
+  const { chatId } = useParams();
+  const [codeVersion, setCodeVersion] = useState(null);
+  const { chat, setChat, loading } = useFetchChatById(chatId, setCodeVersion);
+
   const [isCodeExpanded, setIsCodeExpanded] = useState(false);
 
-  const dispatch = useDispatch();
-
-
-  const promptsAndResponses = chat?.promptsAndResponses || [];
-
-  if (chat && promptsAndResponses.length > 0) {
-    dispatch(
-      setCode(promptsAndResponses[promptsAndResponses.length - 1]?.response)
-    );
-  }
-
-  
   const toggleCodeExpand = () => {
     setIsCodeExpanded(!isCodeExpanded);
   };
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
-      <Header chatTitle={chat?.title}/>
+      <Header chatTitle={chat?.title} />
 
       <div className="flex flex-1 bg-primary text-primary_text min-h-0">
         <Sidebar />
@@ -42,7 +30,12 @@ const Chat = () => {
           {loading ? (
             <LoadingSpinner />
           ) : chat ? (
-            <ChatInterface chat={chat} isExpanded={isCodeExpanded} setChat={setChat}/>
+            <ChatInterface
+              chat={chat}
+              isExpanded={isCodeExpanded}
+              setChat={setChat}
+              setCodeVersion={setCodeVersion}
+            />
           ) : (
             <div className="flex justify-center items-center flex-1 text-xl font-semibold text-red-500">
               Chat not found.
@@ -64,7 +57,7 @@ const Chat = () => {
                 <ChevronLeftIcon className="w-6 h-6 text-primary_text hover:text-hover_accent" />
               )}
             </div>
-            <CodeDisplay chat={chat} isExpanded={isCodeExpanded} />
+            <CodeDisplay chatId={chatId} codeVersion={codeVersion} isExpanded={isCodeExpanded} />
           </>
         )}
       </div>

@@ -1,28 +1,27 @@
 import { useEffect, useState } from "react";
 
-const useFetchChatById = (chatId, setCodeVersion) => {
-  const [chat, setChat] = useState(null);
+const useFetchCodeByVersion = (chatId, version) => {
+  const [code, setCode] = useState({ html: "", css: "", script: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!chatId) return;
+    if (!chatId || version === "") return;
 
     setLoading(true);
     setError(null);
 
-    fetch(`/api/chat/${chatId}`, { credentials: "include" })
+    fetch(`/api/chat/${chatId}/code/${version}`, { credentials: "include" })
       .then(async (res) => {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
-        setChat(data);
-        setCodeVersion(data.promptsAndResponses.length - 1);
+        setCode(data);
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [chatId]);
+  }, [chatId, version]);
 
-  return { chat, setChat, loading, error };
+  return { code, setCode, loading, error };
 };
 
-export default useFetchChatById;
+export default useFetchCodeByVersion;

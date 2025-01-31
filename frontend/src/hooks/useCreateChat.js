@@ -21,9 +21,8 @@ const useCreateChat = () => {
         throw new Error(data.message);
       }
 
-      const newChat = await res.json();
-      navigate(`/chat/${newChat._id}`);
-      return newChat;
+      const { _id } = await res.json();
+      navigate(`/chat/${_id}`);
     } catch (error) {
       toast.error(`Error: ${error.message}`);
       console.error("Create chat error:", error.message);
@@ -32,7 +31,7 @@ const useCreateChat = () => {
     }
   };
 
-  return { createChat, loading , setLoading};
+  return { createChat, loading, setLoading };
 };
 
 export default useCreateChat;

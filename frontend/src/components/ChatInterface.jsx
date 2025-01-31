@@ -3,21 +3,13 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import useGemini from "../hooks/useGemini";
 import useUpdateChat from "../hooks/useUpdateChat";
 import { handleSend } from "../utils/handleSend";
-import { setCode } from "../redux/codeDisplaySlice";
-import { useSelector, useDispatch } from "react-redux";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { HiCode } from "react-icons/hi";
-import { HandleEnhance } from "../utils/handleEnhancing";
+import { CodeBracketIcon } from "@heroicons/react/24/outline";
 
-const ChatInterface = ({ chat, setChat, isExpanded }) => {
+const ChatInterface = ({ chat, setChat, isExpanded, setCodeVersion }) => {
   const [prompt, setPrompt] = useState("");
   const messagesEndRef = useRef(null);
   const { generateResponse, loading } = useGemini();
-  const { updateChat } = useUpdateChat(setChat);
-  const dispatch = useDispatch();
-  const [context, setContext] = useState("");
-  const [oldCode, setOldCode] = useState("");
-  const isContextVisible = !!context;
+  const { updateChat } = useUpdateChat();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -28,35 +20,8 @@ const ChatInterface = ({ chat, setChat, isExpanded }) => {
   }, [chat?.promptsAndResponses]);
 
   const handleSendClick = async () => {
-    if (context) {
-      await HandleEnhance({
-        prompt,
-        oldCode,
-        chat,
-        setChat,
-        updateChat,
-        generateResponse,
-      });
-      setContext("");
-    } else {
-      await handleSend({ prompt, chat, setChat, updateChat, generateResponse });
-    }
-
+    await handleSend({ prompt, chat, setChat, setCodeVersion, updateChat, generateResponse });
     setPrompt("");
-  };
-
-  const handleCodeDisplay = (code) => {
-    dispatch(setCode(code));
-  };
-  const handleDoubleClick = (data) => {
-    setContext(data.textOverview);
-    setOldCode(`html: ${data.html}, css: ${data.css}, js: ${data.js}`);
-
-    // console.log(data);
-  };
-  // console.log(oldCode);
-  const removeContext = () => {
-    setContext("");
   };
 
   return (
@@ -74,36 +39,19 @@ const ChatInterface = ({ chat, setChat, isExpanded }) => {
               {entry.prompt}
             </div>
             {/* Response */}
-            <div
-              onDoubleClick={() => handleDoubleClick(entry.response)}
-              className="relative p-4 rounded-lg bg-gray-800 bg-opacity-50 text-gray-200 shadow-lg cursor-pointer"
-            >
+            <div className="p-4 rounded-lg bg-gray-800 bg-opacity-50 text-gray-200 shadow-lg relative">
               {entry.response.textOverview}
               <button
-                onClick={() => handleCodeDisplay(entry.response)}
-                className="absolute  bottom-2 right-2  px-1.5 py-0.5  bg-gray-600 bg-opacity-50 text-gray-300 hover:from-blue-600 hover:to-blue-800 rounded-lg text-sm shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                onClick={() => setCodeVersion(index)}
+                className="absolute  bottom-2 right-2  px-1.5 py-0.5  bg-gray-600 bg-opacity-50 text-gray-300 rounded-lg text-sm shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
-                <HiCode className="w-5 h-5" />
-                {/* Preview */}
+                <CodeBracketIcon className="w-5 h-5 " />
               </button>
             </div>
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
-
-      {/* {isContextVisible && ( */}
-        <div
-          className={`relative h-auto  p-4 border-t border-gray-700 bg-gray-700 flex-shrink-0 rounded-t-lg overflow-hidden transition-all duration-300 ease-in-out transform ${
-            isContextVisible ? "translate-y-0 opacity-50" : "translate-y-full opacity-0"
-          }`}
-        >
-          {context}
-          <button onClick={removeContext} className="absolute top-2 right-2">
-            <XMarkIcon className="w-5 h-5" />
-          </button>
-        </div>
-      {/* )} */}
 
       {/* Input Area */}
       <div className="p-4 border-t border-gray-700 bg-gray-900 flex-shrink-0">
@@ -133,4 +81,5 @@ const ChatInterface = ({ chat, setChat, isExpanded }) => {
     </div>
   );
 };
+
 export default ChatInterface;

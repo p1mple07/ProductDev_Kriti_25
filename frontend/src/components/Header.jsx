@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Disclosure } from "@headlessui/react";
-import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
+import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
 import useSignOut from "../hooks/useSignOut";
 import ProfileCard from "./ProfileCard";
@@ -52,7 +52,7 @@ function Header({ chatTitle }) {
                       className="p-2 text-gray-500 hover:text-accent"
                       aria-label="Sign Out"
                     >
-                      <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                      <ArrowRightEndOnRectangleIcon className="h-5 w-5" />
                     </button>
                     {/* Render ProfileCard */}
                     {isProfileCardVisible && (
