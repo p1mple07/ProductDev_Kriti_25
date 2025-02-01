@@ -37,7 +37,7 @@ function Header({ chatTitle }) {
                 <div className="flex-shrink-0">
                   <WebCraftLogo />
                 </div>
-                <div className="hidden md:ml-8 md:flex md:items-center md:space-x-4">
+                <div className="hidden lg:ml-8 lg:flex lg:items-center lg:space-x-4">
                   {navigation.map((item) => (
                     <a
                       key={item.name}
@@ -104,7 +104,7 @@ function Header({ chatTitle }) {
                 )}
 
                 {/* Mobile menu button */}
-                <div className="md:hidden">
+                <div className="lg:hidden">
                   <DisclosureButton className="p-2 text-secondary_text hover:text-primary_text hover:bg-tertiary/50 rounded-md">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -119,7 +119,7 @@ function Header({ chatTitle }) {
           </div>
 
           {/* Mobile menu */}
-          <DisclosurePanel className="md:hidden border-t border-border/40">
+          <DisclosurePanel className="lg:hidden border-t border-border/40">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
                 <DisclosureButton
