@@ -1,39 +1,39 @@
 function Footer() {
-    return (
-        <footer className="bg-primary h-[6vh]">
-            <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-                <span className="text-sm text-secondary_text sm:text-center">
-                    © 2024{" "}
-                    <a href="https://github.com/p1mple07/ProductDev_Kriti_25" className="hover:underline">
-                        WebCraft
-                    </a>
-                    . All Rights Reserved.
-                </span>
-                <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-secondary_text sm:mt-0">
-                    <li>
-                        <a href="/#" className="hover:underline me-4 md:me-6">
-                            About
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/#" className="hover:underline me-4 md:me-6">
-                            Privacy Policy
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/#" className="hover:underline me-4 md:me-6">
-                            Licensing
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/#" className="hover:underline">
-                            Contact
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </footer>
-    );
+  const footerLinks = [
+    { name: "About", href: "#" },
+    { name: "Privacy", href: "#" },
+    { name: "Terms", href: "#" },
+    { name: "Contact", href: "#" },
+  ];
+
+  return (
+    <footer className="bg-primary border-t border-border/40">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+          <div className="flex items-center gap-2 text-sm text-secondary_text">
+            <span className="font-medium">
+              <span className="text-accent">Web</span>
+              <span className="text-primary_text">Craft</span>
+            </span>
+            <span>© {new Date().getFullYear()}</span>
+          </div>
+
+          <ul className="flex flex-wrap gap-4 text-sm">
+            {footerLinks.map((link) => (
+              <li key={link.name}>
+                <a
+                  href={link.href}
+                  className="text-secondary_text hover:text-accent transition-colors"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;

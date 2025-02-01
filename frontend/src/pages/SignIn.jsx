@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Label, Spinner, TextInput } from "flowbite-react";
+import Input from "../components/Input";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import useSignIn from "../hooks/useSignIn";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import AuthLayout from "../components/auth/AuthLayout";
+import AuthCard from "../components/auth/AuthCard";
 
 const SignIn = () => {
   const { loading } = useSelector((state) => state.user);
@@ -27,68 +30,60 @@ const SignIn = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       <div className="flex flex-col lg:flex-row flex-1 bg-gradient-to-b from-secondary to-background">
-        {/* Left Section */}
-        <div className="flex-1 p-6 lg:p-12 flex items-center justify-center lg:justify-start">
-          <div className="text-center lg:text-left lg:pl-[25%]">
-            <Link to="/" className="font-bold text-4xl">
-              <span className="rounded-lg text-6xl text-primary_text">
-                WebCraft
-              </span>
-            </Link>
-            <p className="mt-5 text-2xl text-secondary_text">
-              Build Website
-            </p>
-          </div>
-        </div>
-
-        {/* Right Section */}
-        <div className="flex-1 p-6 lg:p-12 flex flex-col justify-center md:px-[10%]">
-          <form className="flex flex-col gap-4 lg:pr-[30%]" onSubmit={onSubmit}>
-            <div className="flex flex-col">
-              <Label value="Email" className="text-primary_text" />
-              <TextInput
-                type="text"
-                placeholder="name@company.com"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full pt-2 focus:outline-none focus:ring focus:ring-hover_accent"
-              />
+        <AuthLayout 
+          title="Welcome back!"
+          subtitle="Sign in to continue building amazing websites"
+        />
+        
+        <AuthCard>
+          <form className="flex flex-col gap-6" onSubmit={onSubmit}>
+            <div className="space-y-2">
+              <h2 className="text-2xl font-semibold text-primary_text">Sign In</h2>
+              <p className="text-secondary_text">Enter your credentials to access your account</p>
             </div>
-            <div className="flex flex-col">
-              <Label value="Password" className="text-primary_text" />
-              <TextInput
-                type="password"
-                placeholder="Password"
-                id="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full pt-2 focus:outline-none focus:ring focus:ring-hover_accent"
-              />
-            </div>
+            
+            <Input
+              label="Email"
+              type="email"
+              placeholder="name@company.com"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              label="Password"
+              type="password"
+              placeholder="••••••••"
+              id="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            
             <button
               type="submit"
-              className="bg-transparent hover:bg-hover_accent text-accent font-semibold hover:text-primary_text py-2 px-4 border border-hover_accent hover:border-transparent rounded w-full"
+              className="bg-accent hover:bg-hover_accent text-white font-semibold py-2.5 px-4 rounded-md w-full transition-colors duration-300 flex justify-center items-center h-11"
               disabled={loading}
             >
               {loading ? (
-                <div className="flex justify-center">
-                  <Spinner />
-                  <span className="pl-3">Loading...</span>
-                </div>
+                <>
+                  <ArrowPathIcon className="h-5 w-5 animate-spin mr-2" />
+                  <span>Signing in...</span>
+                </>
               ) : (
                 "Sign In"
               )}
             </button>
             
+            <div className="flex gap-2 text-sm justify-center text-primary_text">
+              <span>Don't have an account?</span>
+              <Link to="/sign-up" className="text-accent hover:text-hover_accent transition-colors">
+                Create account
+              </Link>
+            </div>
           </form>
-          <div className="flex gap-2 text-sm mt-5 text-primary_text">
-            <span>Do Not Have an account?</span>
-            <Link to="/sign-up" className="text-hover_accent">
-              Sign Up
-            </Link>
-          </div>
-        </div>
+        </AuthCard>
       </div>
       <Footer />
     </div>

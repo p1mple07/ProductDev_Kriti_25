@@ -22,8 +22,9 @@ const useSignUp = () => {
         toast.error(data.message)
         dispatch(signUpFailure(data.message));
       } else {
-        navigate('/');
-        dispatch(signUpSuccess());
+        navigate('/new');
+        // console.log(data);
+        dispatch(signUpSuccess(data));
       }
     } catch (error) {
       dispatch(signUpFailure(error.message));

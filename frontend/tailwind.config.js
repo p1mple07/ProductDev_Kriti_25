@@ -40,22 +40,15 @@ export default {
         "accent": "#0891B2",
         "hover_accent": "#0e7490",
       },
-      animation: {
-        vote: "vote 1s ease-in-out",
-      },
       keyframes: {
-        vote: {
-          "0%, 100%": {
-            transform: "rotate(0deg)",
-          },
-          "25%": {
-            transform: "rotate(-30deg)",
-          },
-          "75%": {
-            transform: "rotate(30deg)",
-          },
-        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        }
       },
+      animation: {
+        fadeIn: 'fadeIn 0.8s ease-out forwards',
+      }
     },
   },
   plugins: [

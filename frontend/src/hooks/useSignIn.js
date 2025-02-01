@@ -21,7 +21,7 @@ const useSignIn = () => {
         toast.error(data.message)
         dispatch(signInFailure(data.message));
       } else {
-        navigate('/');
+        navigate('/new');
         // console.log(data);
         dispatch(signInSuccess(data));
       }

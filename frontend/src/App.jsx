@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import Chat from "./pages/Chat";
 import NewChat from "./pages/NewChat";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
 
@@ -15,15 +16,16 @@ function App() {
       <Toaster position="top-right" richColors />
       
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route element={<PrivateRoute />}>
           <Route path="/chat/:chatId" element={<Chat />} />
-          <Route path="/" element={<NewChat />} />
+          <Route path="/new" element={<NewChat />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}></Route>
-        <Route path="*" element={<SignIn />} />
+        <Route path="*" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   )
