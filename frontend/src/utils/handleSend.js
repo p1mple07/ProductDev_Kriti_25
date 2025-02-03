@@ -1,14 +1,39 @@
 import getSystemPrompt, { extractJsonFromResponse } from "./systemPrompt";
 import { updateHtmlContent } from "./addImage";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 
-export const handleSend = async ({ prompt, chat, setChat, setCodeVersion, updateChat, generateResponse }) => {
+export const handleSend = async ({ 
+  prompt, 
+  chat, 
+  setChat, 
+  setCodeVersion, 
+  updateChat, 
+  generateResponse 
+}) => {
   if (!prompt.trim()) return;
 
-  const formattedPrompt = getSystemPrompt(prompt);
-
   try {
-    // Optimistic update with loading state
+    // Fetch last code version
+    const lastVersion = chat.promptsAndResponses.length - 1;
+    let lastCodeVersion = null;
+
+    if (lastVersion >= 0) {
+      try {
+        const response = await fetch(`/api/chat/${chat._id}/code/${lastVersion}`, {
+          credentials: "include"
+        });
+        if (!response.ok) throw new Error("Failed to fetch code");
+        lastCodeVersion = await response.json();
+      } catch (error) {
+        console.warn("Failed to fetch last code version:", error);
+        // Continue without last code version if fetch fails
+      }
+    }
+
+    // Generate system prompt with context & last code version
+    const formattedPrompt = getSystemPrompt(prompt, chat.context, lastCodeVersion);
+
+    // Optimistic update - Show loading message
     setChat((prevChat) => ({
       ...prevChat,
       promptsAndResponses: [
@@ -30,12 +55,16 @@ export const handleSend = async ({ prompt, chat, setChat, setCodeVersion, update
     if (!responseData) {
       throw new Error("Invalid response format");
     }
+    console.log("responseData", responseData);
 
-    const htmlWithImage = await updateHtmlContent(responseData.html);
+    // Process HTML with images
+    // const htmlWithImage = await updateHtmlContent(responseData.html);
+    const htmlWithImage = responseData.html;
 
     // Update local state with final response
     setChat((prevChat) => ({
       ...prevChat,
+      context: responseData.context || prevChat.context,
       promptsAndResponses: [
         ...(prevChat?.promptsAndResponses || []).slice(0, -1),
         {
@@ -47,6 +76,7 @@ export const handleSend = async ({ prompt, chat, setChat, setCodeVersion, update
 
     // Send to backend
     await updateChat(chat._id, {
+      context: responseData.context || chat.context,
       prompt,
       response: {
         textOverview: responseData.textOverview || "No overview provided.",

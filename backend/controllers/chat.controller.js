@@ -14,7 +14,7 @@ export const getAllChats = async (req, res, next) => {
 // Get a single chat (except code) by ID
 export const getChatById = async (req, res, next) => {
   try {
-    const chat = await Chat.findById(req.params.chatId).select("user title promptsAndResponses.prompt promptsAndResponses.response.textOverview");
+    const chat = await Chat.findById(req.params.chatId).select("user title context promptsAndResponses.prompt promptsAndResponses.response.textOverview");
 
     if (!chat) return next(errorHandler(404, "Chat not found."));
 
@@ -31,11 +31,12 @@ export const getChatById = async (req, res, next) => {
 // Create a new chat
 export const createChat = async (req, res, next) => {
   try {
-    const { title, prompt, response } = req.body;
+    const { title, context , prompt , response } = req.body;
 
     const chat = await Chat.create({
       user: req.user.id,
       title,
+      context,
       promptsAndResponses: [{ prompt, response }],
     });
 
@@ -47,7 +48,7 @@ export const createChat = async (req, res, next) => {
 
 export const updateChat = async (req, res, next) => {
   try {
-    const { prompt, response } = req.body;
+    const {context, prompt, response } = req.body;
     
     // First verify ownership with minimal data fetch
     const chatExists = await Chat.findOne(
@@ -65,7 +66,8 @@ export const updateChat = async (req, res, next) => {
     // Update chat with new prompt-response
     await Chat.findByIdAndUpdate(
       req.params.chatId,
-      { 
+      {
+        $set: { context }, 
         $push: { 
           promptsAndResponses: { 
             prompt,
