@@ -6,27 +6,15 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
+      '/anthropic': {
+        target: 'https://api.anthropic.com/v1/messages',
+        changeOrigin: true,
+      },
       '/api': {
-        target: process.env.VITE_BACKEND_URL || 'http://localhost:3000',
+        target: import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000',
         changeOrigin: true,
         secure: true,
-      },
-    },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          ui: ['@headlessui/react', '@heroicons/react'],
-        },
-      },
-    },
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-      },
+      }
     },
   },
 });

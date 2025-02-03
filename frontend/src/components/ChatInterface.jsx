@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
-import useGemini from "../hooks/useGemini";
+import useAnthropic from "../hooks/useAnthropic";
 import useUpdateChat from "../hooks/useUpdateChat";
 import { handleSend } from "../utils/handleSend";
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
@@ -8,7 +8,7 @@ import { CodeBracketIcon } from "@heroicons/react/24/outline";
 const ChatInterface = ({ chat, setChat, isExpanded, setCodeVersion }) => {
   const [prompt, setPrompt] = useState("");
   const messagesEndRef = useRef(null);
-  const { generateResponse, loading } = useGemini();
+  const { generateResponse, loading } = useAnthropic();
   const { updateChat } = useUpdateChat();
 
   const scrollToBottom = () => {

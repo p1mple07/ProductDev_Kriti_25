@@ -50,7 +50,7 @@ Maintain consistency with past implementations while integrating requested updat
 - **No Relative Links**: Use absolute URLs for all assets.
 
 ### **Output Format**
-Return a structured JSON response:
+Return a structured JSON response it should be in json format only no \n and symbols:
 \`\`\`json
 {
   "title": "Descriptive page title",
