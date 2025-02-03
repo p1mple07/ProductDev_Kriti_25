@@ -26,7 +26,7 @@ export const downloadCodeFiles = (code) => {
     };
   
     // Download each file if content exists
-    if (html.trim()) downloadFile(html, 'code.html');
-    if (css.trim()) downloadFile(css, 'code.css');
-    if (script.trim()) downloadFile(script, 'code.js');
+    if (html.trim()) downloadFile(html, 'index.html');
+    if (css.trim()) downloadFile(css, 'style.css');
+    if (script.trim()) downloadFile(script, 'script.js');
   };

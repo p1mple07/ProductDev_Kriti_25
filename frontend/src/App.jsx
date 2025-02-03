@@ -8,6 +8,7 @@ import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import Chat from "./pages/Chat";
 import NewChat from "./pages/NewChat";
 import LandingPage from "./pages/LandingPage";
+import EditWebsite from "./pages/EditWebsite";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route element={<PrivateRoute />}>
           <Route path="/chat/:chatId" element={<Chat />} />
+          <Route path="/chat/:chatId/edit/:version" element={<EditWebsite />} />
           <Route path="/new" element={<NewChat />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
