@@ -5,10 +5,7 @@
 ## Table of Contents  
 - [Project Overview](#project-overview)  
 - [Features](#features)  
-- [Tech Stack](#tech-stack)    
-- [Hosted Server](#hosted-server)  
-- [Demo](#demo) 
-- [Screenshots](#screenshots) 
+- [Tech Stack](#tech-stack)
 - [Installation Locally](#installation-locally)  
   - [Backend Setup](#backend-setup)  
   - [Frontend Setup](#frontend-setup)  
@@ -34,15 +31,6 @@ WebCraft is an AI-powered website builder that allows users to generate, edit, a
 - **Authentication:** JWT (JSON Web Tokens)  
 - **Editor:** GrapesJS  
 - **State Management:** Redux Toolkit  
-
-## Hosted Server  
-**[WebCraft Live (Vercel Deployment)](your-vercel-link-here)**  
-
-## Demo  
-**[Link to Demo](your-drive-link-here)**  
-
-## Screenshots  
-*(Include screenshots of the UI, editor, and AI-generated websites here.)* 
 
 ## Installation Locally  
 
